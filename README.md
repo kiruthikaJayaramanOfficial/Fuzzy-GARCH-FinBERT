@@ -8,6 +8,12 @@
 ![Evidently](https://img.shields.io/badge/Evidently_AI-0.7-7C3AED?style=for-the-badge)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
 ![FinBERT](https://img.shields.io/badge/FinBERT-NLP-orange?style=for-the-badge)
+![GARCH](https://img.shields.io/badge/GARCH_X-Time_Series-darkgreen?style=for-the-badge)
+![Fuzzy Logic](https://img.shields.io/badge/Fuzzy_Logic-WIFCM-blueviolet?style=for-the-badge)
+![NLP](https://img.shields.io/badge/NLP-Transformers-yellow?style=for-the-badge)
+![Quantitative Finance](https://img.shields.io/badge/Quant_Finance-Portfolio_Opt-blue?style=for-the-badge)
+![Deep Learning](https://img.shields.io/badge/Deep_Learning-BERT-red?style=for-the-badge)
+![Drift Detection](https://img.shields.io/badge/Drift_Detection-MLOps-lightgrey?style=for-the-badge)
 
 **NIFTY-50 sentiment-volatility forecasting** using WIFCM μ/ν/π fuzzy degrees
 replacing hard thresholds · Full production MLOps pipeline
@@ -341,6 +347,17 @@ Fuzzy-GARCH-FinBERT/
 | **Research Transfer** | Academic WIFCM framework successfully extended to new domain |
 
 ---
+## 🔑 Keywords
+
+`Machine Learning` `Deep Learning` `NLP` `FinBERT` `BERT` `Transformers`
+`Fuzzy Logic` `Intuitionistic Fuzzy Sets` `WIFCM` `Clustering`
+`Time Series Analysis` `GARCH` `GARCH-X` `Volatility Forecasting`
+`Quantitative Finance` `Portfolio Optimization` `Sharpe Ratio`
+`Sentiment Analysis` `Financial NLP` `Alternative Data`
+`MLOps` `MLflow` `Evidently AI` `Drift Detection` `CI/CD`
+`GitHub Actions` `Streamlit` `Plotly` `Python` `Pandas` `NumPy` `SciPy`
+`Statistical Modeling` `Reproducible Research` `Automated Retraining`
+`NIFTY-50` `Indian Stock Market` `Risk Management`
 
 ## 📬 Contact
 
