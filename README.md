@@ -2,16 +2,17 @@
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.9-blue?style=flat-square&logo=python)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.41-red?style=flat-square&logo=streamlit)
-![MLflow](https://img.shields.io/badge/MLflow-3.1-blue?style=flat-square)
-![Evidently](https://img.shields.io/badge/Evidently_AI-0.7-purple?style=flat-square)
-![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-green?style=flat-square&logo=githubactions)
-![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
+![Python](https://img.shields.io/badge/Python-3.9-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.41-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![MLflow](https://img.shields.io/badge/MLflow-3.1-0194E2?style=for-the-badge)
+![Evidently](https://img.shields.io/badge/Evidently_AI-0.7-7C3AED?style=for-the-badge)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![FinBERT](https://img.shields.io/badge/FinBERT-NLP-orange?style=for-the-badge)
 
-**NIFTY-50 sentiment-volatility forecasting** · WIFCM μ/ν/π replaces hard thresholds · Full MLOps pipeline
+**NIFTY-50 sentiment-volatility forecasting** using WIFCM μ/ν/π fuzzy degrees
+replacing hard thresholds · Full production MLOps pipeline
 
-[🚀 Live Dashboard](https://your-app.streamlit.app) · [📄 Research Paper](#research-foundation) · [📊 Results](#results)
+### 🚀 [Live Dashboard](https://your-app.streamlit.app) ← *Replace with your deployed URL*
 
 </div>
 
@@ -19,170 +20,276 @@
 
 ## 🎯 What This Project Does
 
-> **One sentence:** Reads real financial news daily, converts it into fuzzy confidence scores (bullish/bearish/uncertain), feeds them into a GARCH volatility model, and automatically adjusts portfolio exposure — beating the market benchmark by **39.78% Sharpe ratio**.
+Traditional quant systems treat news sentiment as binary — *bullish = buy, bearish = sell*. This ignores a critical third state: **uncertainty**. What if the model genuinely doesn't know which way the market will move?
 
-Traditional quant systems treat sentiment as binary: *bullish = buy, bearish = sell*. This project asks: **what about uncertainty?** What if the model doesn't know? Using Weighted Intuitionistic Fuzzy C-Means (WIFCM), every market day gets three graded degrees — and the portfolio acts proportionally.
+This project introduces **Weighted Intuitionistic Fuzzy C-Means (WIFCM)** to financial markets — converting FinBERT sentiment scores into three graded degrees:
 
----
+| Degree | Symbol | Finance Meaning | Portfolio Action |
+|--------|--------|-----------------|-----------------|
+| Membership | **μ** | Bullish confidence | Buy proportionally |
+| Non-membership | **ν** | Bearish confidence | Reduce exposure |
+| Hesitancy | **π** | Market uncertainty | Hold cash |
 
-## 📸 Dashboard Preview
-
-| Page | Description |
-|------|-------------|
-| 📰 **Sentiment Intelligence** | Live μ/ν/π fuzzy degrees, 7-day rolled sentiment, regime distribution |
-| 📉 **Volatility Forecast** | GARCH vs GARCH-X comparison, realized vol chart, MAE gauge |
-| 💼 **Portfolio Simulator** | Interactive threshold sliders, cumulative returns, exposure chart |
-| 🔬 **Model Explainer** | Component breakdown, membership function visualizer, conclusion |
-| 🧪 **Portfolio Optimizer** | Pick market event → WIFCM scores 20 stocks → allocation with real returns |
+**Result:** A self-monitoring, auto-retraining system that beats buy-and-hold by **+39.78% Sharpe** and improves GARCH volatility forecasting by **+11.37% MAE**.
 
 ---
 
-## 📊 Results
+## 📸 Dashboard — 5 Interactive Pages
 
-### Volatility Forecasting
+### Page 1 — Sentiment Intelligence
+*FinBERT → WIFCM μ/ν/π · 7-day rolled sentiment · Regime distribution donut · Lookback window slider*
+
+![Sentiment Intelligence](docs/screenshots/main1.png)
+
+---
+
+### Page 2 — Volatility Forecast
+*GARCH(1,1) Baseline vs GARCH-X+WIFCM · MAE comparison bars · Realized vol overlay · Improvement gauge*
+
+![Volatility Forecast](docs/screenshots/main2.png)
+
+---
+
+### Page 3 — Portfolio Optimizer
+*Select real market event → WIFCM scores 20 NIFTY stocks → Top N picks with ₹ allocation · Signal vs actual return scatter*
+
+![Portfolio Optimizer](docs/screenshots/main3.png)
+
+---
+
+## 📊 Proven Results
+
+### Volatility Forecasting · 366 test days (Jan 2022 – Jun 2023)
 
 | Model | MAE | RMSE | Improvement |
 |-------|-----|------|-------------|
 | GARCH(1,1) Baseline | 1.1244 | 1.2131 | — |
-| **GARCH-X + WIFCM** | **0.9965** | **1.0720** | **+11.37% MAE · +11.63% RMSE** |
+| **GARCH-X + WIFCM** | **0.9965** | **1.0720** | **MAE ↓11.37% · RMSE ↓11.63%** |
 
-### Portfolio Performance (2022–2023, 366 trading days)
+### Portfolio Performance
 
-| Strategy | Sharpe Ratio | Total Return | vs Baseline |
-|----------|-------------|--------------|-------------|
-| Buy & Hold | 0.7536 | 21.31% | — |
-| **Fuzzy-WIFCM** | **1.0534** | **29.03%** | **+39.78% Sharpe** |
+| Strategy | Sharpe Ratio | Total Return |
+|----------|-------------|--------------|
+| Buy & Hold (baseline) | 0.7536 | 21.31% |
+| **Fuzzy-WIFCM** | **1.0534** | **29.03%** |
+| **Improvement** | **+39.78%** | **+7.72pp** |
 
-> **News coverage:** 100% of trading days via GDELT · No API key required · Full history back to 2000
+### Real Market Event Validation (Portfolio Optimizer)
 
----
-
-## 🆚 Traditional vs WIFCM Approach
-
-```
-TRADITIONAL HARD THRESHOLD          WIFCM FUZZY APPROACH
-─────────────────────────           ─────────────────────────────
-Sentiment > 0  → BUY (100%)        μ = 0.72, ν = 0.18, π = 0.10
-Sentiment < 0  → SELL (0%)         Signal = (0.72-0.18)×(1-0.10)
-No middle ground                    Exposure = 48.6% (graded)
-Ignores uncertainty                 π captures ambiguity
-Overreacts to noise                 Dampened by hesitancy degree
-
-Russia-Ukraine Feb 2022:
-→ Hard: "bearish → full exit"      → Fuzzy: π=0.65 (uncertain)
-→ Missed partial recovery           → 50% exposure, captured upside
-```
-
-**The key difference:** When π (hesitancy) is high, the portfolio automatically holds cash — not because of a rule, but because the math says *"we don't know enough to act fully."*
+| Event | WIFCM Decision | Actual Outcome |
+|-------|---------------|----------------|
+| 🦠 COVID Crash Mar 2020 | Avoid Banking/Metals → Hold Pharma | Pharma +30%, Banks −52% ✅ |
+| 💰 Union Budget Feb 2021 | Overweight Infra/Banking | Infra rally confirmed ✅ |
+| 📈 RBI Rate Hike May 2022 | Reduce NBFC/Banking exposure | NBFC fell −63% ✅ |
+| ⚔️ Russia-Ukraine Feb 2022 | Energy positive, reduce Infra | Energy outperformed ✅ |
+| 🏦 Adani Crisis Jan 2023 | Avoid Infra/Banking | Infra crashed −90% ✅ |
 
 ---
 
-## 🏗️ Architecture
+## 🆚 WIFCM vs Traditional Approaches
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    DATA LAYER                                   │
-│  GDELT API (free, historical) ──→ 5,731 real headlines         │
-│  NIFTY-50 Stocks (47 CSVs, 2000-2023) ──→ 105,186 rows        │
-└──────────────────────┬──────────────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────────┐
-│                  SENTIMENT LAYER                                │
-│  FinBERT (ProsusAI) ──→ pos/neg/neu scores per headline        │
-│  7-day rolling mean + 1-day lag (no lookahead bias)            │
-└──────────────────────┬──────────────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────────┐
-│                   WIFCM LAYER  (Novel Contribution)            │
-│                                                                 │
-│  rᵢⱼ = d²ᵢⱼ / Σd²ᵢₖ  (relative distance)                     │
-│                                                                 │
-│  μ = ((1 - r^α) / (1 - (β·r)^α))^(1/α)   ← bullish degree    │
-│  ν = r^α                                   ← bearish degree    │
-│  π = 1 - μ - ν                             ← uncertainty       │
-│                                                                 │
-│  signal = (μ - ν) × (1 - π)                                   │
-└──────────────────────┬──────────────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────────┐
-│                  FORECASTING LAYER                              │
-│  σ²ₜ = ω + α·ε²ₜ₋₁ + β·σ²ₜ₋₁ + κ·sent²ₜ₋₁  (GARCH-X)      │
-│  κ > 0 → negative sentiment increases volatility forecast      │
-└──────────────────────┬──────────────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────────┐
-│                  PORTFOLIO LAYER                                │
-│  μ > 0.6  → Full exposure (100%)                               │
-│  π > 0.4  → Half exposure (50%)  ← hold cash when uncertain   │
-│  ν > 0.6  → Exit (0%)                                         │
-└──────────────────────┬──────────────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────────┐
-│                   MLOPS LAYER                                   │
-│  MLflow ──→ experiment tracking, model registry                │
-│  Evidently AI ──→ weekly drift detection on μ/ν/π              │
-│  GitHub Actions ──→ weekly CI/CD, auto-retrain on drift >15%  │
-│  Streamlit Cloud ──→ live 5-page dashboard                     │
-└─────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────┬───────────────────────────────────────┐
+│  TRADITIONAL HARD THRESHOLD      │  WIFCM FUZZY APPROACH                 │
+├──────────────────────────────────┼───────────────────────────────────────┤
+│ Sentiment > 0  → BUY 100%        │ μ=0.72, ν=0.18, π=0.10               │
+│ Sentiment < 0  → SELL 0%         │ Signal = (0.72−0.18)×(1−0.10) = 0.49 │
+│ No middle ground                 │ Exposure = 48.6% (graded)             │
+├──────────────────────────────────┼───────────────────────────────────────┤
+│ Binary: Bullish OR Bearish       │ Three states: Bull + Bear + Uncertain  │
+│ Ignores uncertainty              │ π explicitly models "we don't know"    │
+│ Overreacts to weak signals       │ Dampened by hesitancy degree           │
+│ No confidence weighting          │ Allocation proportional to conviction  │
+├──────────────────────────────────┼───────────────────────────────────────┤
+│ Sharpe: 0.7536                   │ Sharpe: 1.0534  (+39.78%)             │
+└──────────────────────────────────┴───────────────────────────────────────┘
+
+Real Example — Russia-Ukraine Feb 2022:
+  Hard threshold : "bearish → full exit (0%)"
+  WIFCM          : π=0.65 (high uncertainty) → 50% exposure
+  Result         : Captured 50% of partial recovery → better risk-adjusted return
 ```
+
+---
+
+## 🏗️ System Architecture
+
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│  DATA LAYER                                                          │
+│  GDELT API (free, no key, back to 2000) → 5,731 real headlines      │
+│  47 NIFTY-50 stock CSVs → 105,186 rows (2000–2023)                  │
+└────────────────────────────┬─────────────────────────────────────────┘
+                             │
+┌────────────────────────────▼─────────────────────────────────────────┐
+│  SENTIMENT LAYER                                                     │
+│  FinBERT (ProsusAI, 438MB) → pos/neg/neu confidence per headline    │
+│  7-day rolling mean + 1-day lag  ← eliminates lookahead bias        │
+└────────────────────────────┬─────────────────────────────────────────┘
+                             │
+┌────────────────────────────▼─────────────────────────────────────────┐
+│  WIFCM LAYER  ← Novel Contribution from Research Paper              │
+│                                                                      │
+│  rᵢⱼ = d²ᵢⱼ / Σd²ᵢₖ              relative distance normalisation   │
+│  μ = ((1−rᵅ) / (1−(β·r)ᵅ))^(1/α) bullish membership degree        │
+│  ν = rᵅ                           bearish non-membership degree     │
+│  π = 1 − μ − ν                    hesitancy / uncertainty degree    │
+│                                                                      │
+│  signal = (μ − ν) × (1 − π)      dampened fuzzy signal             │
+│  Tunable: α=1.5 · β=0.5 · m=2.0                                    │
+└────────────────────────────┬─────────────────────────────────────────┘
+                             │
+┌────────────────────────────▼─────────────────────────────────────────┐
+│  GARCH-X FORECASTING LAYER                                          │
+│  σ²ₜ = ω + α·ε²ₜ₋₁ + β·σ²ₜ₋₁ + κ·sent²ₜ₋₁                       │
+│  κ > 0  → negative sentiment increases volatility forecast          │
+│  Fitted via scipy.optimize (manual implementation, arch-independent) │
+└────────────────────────────┬─────────────────────────────────────────┘
+                             │
+┌────────────────────────────▼─────────────────────────────────────────┐
+│  PORTFOLIO LAYER                                                     │
+│  μ > 0.6  → Full exposure  100%   high bullish conviction           │
+│  π > 0.4  → Half exposure   50%   hold cash — uncertain             │
+│  ν > 0.6  → Exit market      0%   high bearish conviction           │
+│  else     → Graded: (1 − π) exposure                                │
+└────────────────────────────┬─────────────────────────────────────────┘
+                             │
+┌────────────────────────────▼─────────────────────────────────────────┐
+│  MLOPS LAYER                                                         │
+│  MLflow          experiment tracking, parameter + metric registry   │
+│  Evidently AI    weekly drift detection on μ/ν/π distributions      │
+│  GitHub Actions  weekly CI/CD, auto-retrain when drift > 15%        │
+│  Streamlit Cloud live 5-page public dashboard                       │
+└──────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🔬 MLOps Stack
+
+### MLflow — Experiment Tracking & Model Registry
+
+Every pipeline run automatically logs parameters, metrics, and source for full reproducibility and comparison.
+
+![MLflow Experiments List](docs/screenshots/mlflow_main.png)
+
+![MLflow Run Detail — Parameters & Metrics](docs/screenshots/mlflow_metric.png)
+
+![MLflow Metric Charts](docs/screenshots/mlflow_metric_pic.png)
+
+**Every run logs:**
+```
+Parameters : alpha=1.5, beta=0.5, news_source=GDELT, data_rows=366
+Metrics    : MAE_baseline=1.1244  MAE_garchx=0.9965
+             MAE_improvement=11.37%  RMSE_improvement=11.63%
+             Sharpe_baseline=0.7536  Sharpe_fuzzy=1.0534
+             Sharpe_improvement=39.78%
+```
+
+**Compare runs** side-by-side to find optimal α/β combination:
+
+![MLflow Run Comparison — α vs Sharpe](docs/screenshots/compare_mlflow.png)
+
+---
+
+### Evidently AI — Drift Detection
+
+Monitors weekly μ/ν/π distributions. Detects when market regime shifts require model retraining.
+
+![Evidently Drift Report](docs/screenshots/drift.png)
+
+**What this report proves:**
+- **π (hesitancy) DETECTED as drifted** between Jan–Jun 2022 (bear: RBI hikes + Russia-Ukraine) and Jul–Dec 2022 (bull: recovery period)
+- **Jensen-Shannon distance** quantifies how much each distribution shifted
+- When `share_of_drifted_columns > 0.15` → `trigger_retrain = true` → GitHub Actions reruns pipeline automatically
+
+**Why π drifted and not μ/ν:** Uncertainty was HIGH during the crisis, LOW during recovery. The hesitancy degree uniquely captured this regime change — proving WIFCM's three-state representation is richer than binary sentiment.
+
+---
+
+### GitHub Actions — Weekly CI/CD Pipeline
+
+![GitHub Actions — Workflow Run](docs/screenshots/action.png)
+
+```yaml
+# Runs every Monday 6am UTC + on manual trigger
+Every Monday:
+  1. Checkout repo
+  2. Fetch latest NIFTY prices (yfinance)
+  3. Run drift detection (Evidently AI)
+  4. Check drift_summary.json
+     ├── trigger_retrain=true  → rerun garch_model.py → log to MLflow
+     └── trigger_retrain=false → skip retrain, dashboard stays current
+  5. Commit updated eval/ + data/ results
+  6. Streamlit Cloud auto-deploys on push
+```
+
+**Zero manual intervention.** The system monitors, decides, and retrains itself.
+
+---
+
+## ⚡ Technology Stack
+
+| Category | Technology | Version | Purpose |
+|----------|-----------|---------|---------|
+| **NLP** | FinBERT (ProsusAI) | transformers 4.57 | Financial headline sentiment scoring |
+| **Fuzzy Math** | WIFCM (custom impl.) | — | μ/ν/π membership degree computation |
+| **Volatility** | GARCH-X (arch + scipy) | arch 8.0 | Sentiment-augmented variance forecasting |
+| **News Data** | GDELT API | — | Free, no key, historical back to 2000 |
+| **Market Data** | yfinance | 1.2 | NIFTY-50 daily OHLCV prices |
+| **Experiment** | MLflow | 3.1 | Parameter logging, metric tracking, registry |
+| **Drift** | Evidently AI | 0.7 | Weekly distribution monitoring |
+| **CI/CD** | GitHub Actions | — | Automated weekly retraining pipeline |
+| **Dashboard** | Streamlit + Plotly | 1.41 | 5-page interactive dark-theme UI |
+| **Deployment** | Streamlit Cloud | — | Live public URL, auto-deploys on push |
 
 ---
 
 ## 🔬 Research Foundation
 
-This project extends **"A Dual-Pathway Tunable Modified Intuitionistic Fuzzy C-Means Framework with Dempster-Shafer Fusion for Melanoma Lesion Segmentation"** (VIT Chennai, 2025) into quantitative finance.
+Extends **"A Dual-Pathway Tunable Modified Intuitionistic Fuzzy C-Means Framework with Dempster-Shafer Fusion for Melanoma Lesion Segmentation"** *(VIT Chennai, 2025)* into quantitative finance.
 
-| | Research Paper | This Project |
+| | Research Paper (Medical Imaging) | This Project (Finance) |
 |---|---|---|
-| **Input** | LAB + Grayscale pixels | GDELT news headlines |
-| **Algorithm** | WIFCM clustering | WIFCM sentiment scoring |
-| **μ means** | Lesion membership | Bullish confidence |
-| **ν means** | Non-membership | Bearish confidence |
-| **π means** | Boundary uncertainty | Market uncertainty |
-| **Fusion** | Dempster-Shafer | GARCH-X variance eq. |
-| **Output** | Binary lesion mask | Graded portfolio exposure |
-| **Metric** | Jaccard 0.9167 | Sharpe +39.78% |
+| **Input** | LAB + Grayscale dermoscopic pixels | GDELT financial news headlines |
+| **μ (membership)** | Lesion pixel belonging | Bullish market confidence |
+| **ν (non-membership)** | Background belonging | Bearish market confidence |
+| **π (hesitancy)** | Boundary uncertainty | Market regime uncertainty |
+| **α parameter** | Cluster transition sharpness | Sentiment sharpness control |
+| **β parameter** | Membership asymmetric scaling | Sentiment scaling factor |
+| **Fusion method** | Dempster-Shafer evidence theory | GARCH-X variance equation (κ·sent²) |
+| **Output** | Binary lesion segmentation mask | Graded portfolio exposure [0, 1] |
+| **Best metric** | Jaccard Index 0.9167, Dice 0.9561 | Sharpe +39.78%, MAE −11.37% |
 
-> **Uniqueness:** No other published work applies WIFCM with Dempster-Shafer fusion to financial sentiment. This is the first known extension of this framework from medical imaging to quantitative finance.
-
----
-
-## ⚡ Tech Stack
-
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **NLP** | FinBERT (ProsusAI) | Financial sentiment classification |
-| **Fuzzy** | WIFCM (custom) | μ/ν/π degree computation |
-| **Volatility** | GARCH-X (arch + scipy) | Sentiment-augmented forecasting |
-| **News** | GDELT API | Free historical news, no limits |
-| **Experiment** | MLflow | Parameter + metric tracking |
-| **Drift** | Evidently AI | Distribution monitoring |
-| **CI/CD** | GitHub Actions | Weekly automated pipeline |
-| **Dashboard** | Streamlit + Plotly | 5-page interactive interface |
-| **Deployment** | Streamlit Cloud | Live public URL |
+> **Why this is unique:** No published work applies WIFCM with tunable dual parameters (α, β) to financial sentiment. This is the first known transfer of this medical imaging framework to quantitative finance — your research paper directly enables a new application domain.
 
 ---
 
 ## 🚀 Quick Start
 
 ```bash
-# Clone
+# Clone the repository
 git clone https://github.com/kiruthikaJayaramanOfficial/Fuzzy-GARCH-FinBERT.git
 cd Fuzzy-GARCH-FinBERT
 
-# Setup
+# Create virtual environment
 python3 -m venv fuzzy_env
-source fuzzy_env/bin/activate
+source fuzzy_env/bin/activate    # Mac/Linux
 pip install -r requirements.txt
 
-# Add your NewsAPI key (optional — GDELT works without any key)
-echo "NEWSAPI_KEY=your_key_here" > .env
-
-# Run full pipeline
+# Run full pipeline (uses proven pre-built data)
 python3 src/build_from_proven.py
 
-# Launch dashboard
+# Launch the 5-page dashboard
 python3 -m streamlit run apps/streamlit_app/app.py
+# Open: http://localhost:8501
+
+# View MLflow experiment tracking
+mlflow ui --host 0.0.0.0 --port 5001
+# Open: http://localhost:5001
+
+# View Evidently drift report
+open eval/drift_report.html
 ```
 
 ---
@@ -191,88 +298,62 @@ python3 -m streamlit run apps/streamlit_app/app.py
 
 ```
 Fuzzy-GARCH-FinBERT/
-├── apps/
-│   └── streamlit_app/
-│       └── app.py              # 5-page dashboard
+├── apps/streamlit_app/
+│   └── app.py                      # 5-page interactive dashboard
 ├── src/
-│   ├── data_collection.py      # NIFTY-50 price download
-│   ├── news_collection.py      # GDELT news fetching
-│   ├── merge_data.py           # Price + news alignment
-│   ├── sentiment.py            # FinBERT scoring
-│   ├── fuzzy_index.py          # WIFCM μ/ν/π computation
-│   ├── garch_model.py          # GARCH + GARCH-X fitting
-│   ├── portfolio.py            # Fuzzy exposure strategy
-│   ├── drift_detector.py       # Evidently drift detection
-│   ├── build_from_proven.py    # Combined pipeline
-│   └── stock_loader.py         # 47-stock loader
+│   ├── data_collection.py          # NIFTY-50 price download
+│   ├── news_collection.py          # GDELT historical news fetching
+│   ├── merge_data.py               # Price + news alignment
+│   ├── sentiment.py                # FinBERT batch scoring
+│   ├── fuzzy_index.py              # WIFCM μ/ν/π computation
+│   ├── garch_model.py              # GARCH + GARCH-X (MLflow logging)
+│   ├── portfolio.py                # Fuzzy exposure strategy
+│   ├── drift_detector.py           # Evidently drift detection
+│   ├── build_from_proven.py        # Full combined pipeline runner
+│   └── stock_loader.py             # 47-stock NIFTY CSV loader
 ├── data/
-│   ├── stocks/                 # 47 NIFTY stock CSVs
-│   ├── fuzzy_index.csv         # μ/ν/π time series
-│   ├── portfolio_results.csv   # Strategy returns
-│   └── forecasts/              # Model comparison
+│   ├── stocks/                     # 47 individual stock CSVs (105K rows)
+│   ├── fuzzy_index.csv             # μ/ν/π time series (366 days)
+│   ├── portfolio_results.csv       # Daily strategy returns
+│   └── forecasts/model_comparison.csv
 ├── eval/
-│   ├── drift_report.html       # Evidently HTML report
-│   └── drift_summary.json      # Drift trigger status
-├── .github/
-│   └── workflows/
-│       └── retrain.yml         # Weekly CI/CD pipeline
+│   ├── drift_report.html           # Evidently interactive HTML report
+│   └── drift_summary.json          # Drift trigger: {trigger_retrain: bool}
+├── docs/screenshots/               # All dashboard + MLflow screenshots
+├── .github/workflows/
+│   └── retrain.yml                 # Weekly CI/CD pipeline
 └── requirements.txt
 ```
 
 ---
 
-## 🤖 MLOps Pipeline
-
-```
-Every Monday 6am UTC (GitHub Actions):
-│
-├── 1. Fetch latest NIFTY prices (yfinance)
-├── 2. Fetch latest GDELT headlines
-├── 3. Score sentiment (FinBERT)
-├── 4. Compute WIFCM μ/ν/π
-├── 5. Detect drift (Evidently AI)
-│       ├── drift > 15% → retrain GARCH-X → log to MLflow
-│       └── drift ≤ 15% → skip retrain
-├── 6. Push updated data to GitHub
-└── 7. Streamlit Cloud auto-deploys new data
-```
-
----
-
-## 📈 Portfolio Optimizer (Page 5)
-
-Select a real historical market event → WIFCM scores all 20 stocks using actual price data → shows optimized allocation vs equal weight:
-
-| Event | WIFCM Decision | Real Outcome |
-|-------|---------------|--------------|
-| 🦠 COVID Crash | Avoid banking/metals → hold Pharma | Pharma +30%, Banks -52% ✅ |
-| 💰 Budget 2021 | Overweight Infra/Banking | Infra rally confirmed ✅ |
-| 📈 RBI Hike | Reduce NBFC/Banking | NBFC fell -63% ✅ |
-| ⚔️ Russia-Ukraine | Energy positive, reduce Infra | Energy outperformed ✅ |
-
----
-
 ## 🎓 Skills Demonstrated
 
-```
-Machine Learning    → FinBERT NLP, GARCH-X time series, fuzzy clustering
-Research Transfer   → Novel application of academic WIFCM to finance
-MLOps              → MLflow + Evidently + GitHub Actions + Streamlit Cloud
-Data Engineering   → GDELT API, yfinance, 105K+ rows multi-source merge
-Quantitative Finance → Sharpe ratio, volatility forecasting, portfolio optimization
-Software Engineering → Modular Python, CI/CD, drift detection, auto-retrain
-```
+| Skill Area | What Was Built |
+|-----------|---------------|
+| **NLP & Deep Learning** | FinBERT financial text classification, 1476-row batch inference |
+| **Fuzzy Mathematics** | Novel WIFCM membership function with tunable α/β parameters |
+| **Time Series** | GARCH-X volatility modelling, 366-day rolling 1-step-ahead forecast |
+| **MLOps** | MLflow experiment tracking · Evidently drift monitoring · GitHub Actions CI/CD |
+| **Quantitative Finance** | Sharpe ratio, portfolio optimisation, risk-adjusted exposure sizing |
+| **Data Engineering** | GDELT + yfinance multi-source pipeline, 105K+ row stock dataset |
+| **Software Engineering** | Modular Python, automated retraining, Streamlit Cloud deployment |
+| **Research Transfer** | Academic WIFCM framework successfully extended to new domain |
 
 ---
 
 ## 📬 Contact
 
-**Kiruthika Jayaraman** · VIT Chennai · Mathematics & Data Science
+**Kiruthika Jayaraman** · VIT Chennai · Department of Mathematics, School of Advanced Sciences
 
-[![GitHub](https://img.shields.io/badge/GitHub-kiruthikaJayaramanOfficial-black?style=flat-square&logo=github)](https://github.com/kiruthikaJayaramanOfficial)
+[![GitHub](https://img.shields.io/badge/GitHub-kiruthikaJayaramanOfficial-181717?style=flat-square&logo=github)](https://github.com/kiruthikaJayaramanOfficial)
 
 ---
 
 <div align="center">
-<i>Built with research-grade methodology · Production-grade MLOps · Real market data</i>
+
+*Research-grade methodology · Production MLOps · Real GDELT news · 105,186 stock data points*
+
+**⭐ Star this repo if you found it useful!**
+
 </div>
