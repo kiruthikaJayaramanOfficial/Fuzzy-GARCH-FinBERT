@@ -1,0 +1,52 @@
+name: Weekly Drift Check + Retrain
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"   # Every Monday 6am UTC
+  workflow_dispatch:        # Allow manual trigger
+
+jobs:
+  drift-and-retrain:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run data collection
+        env:
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+        run: python src/data_collection.py
+
+      - name: Run drift detection
+        run: python src/drift_detector.py
+
+      - name: Check drift and retrain if needed
+        run: |
+          python3 -c "
+          import json
+          with open('eval/drift_summary.json') as f:
+              s = json.load(f)
+          if s['trigger_retrain']:
+              print('DRIFT DETECTED - retraining...')
+              import subprocess
+              subprocess.run(['python', 'src/garch_model.py'])
+          else:
+              print('No drift - skipping retrain')
+          "
+
+      - name: Commit updated results
+        run: |
+          git config user.name  "github-actions"
+          git config user.email "actions@github.com"
+          git add eval/ data/ || true
+          git diff --staged --quiet || git commit -m "auto: drift check $(date +'%Y-%m-%d')"
+          git push || true
