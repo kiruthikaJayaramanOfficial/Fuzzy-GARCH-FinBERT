@@ -1,0 +1,6 @@
+{
+  "drift_detected": false,
+  "share_drifted": 0.0,
+  "threshold": 0.15,
+  "trigger_retrain": false
+}
