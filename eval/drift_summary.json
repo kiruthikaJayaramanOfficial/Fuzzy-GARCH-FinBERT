@@ -2,5 +2,7 @@
   "drift_detected": false,
   "share_drifted": 0.0,
   "threshold": 0.15,
-  "trigger_retrain": false
+  "trigger_retrain": false,
+  "reference_period": "2022-01 to 2022-06 (Bear)",
+  "current_period": "2022-07 to 2022-12 (Bull)"
 }
