@@ -1,0 +1,7 @@
+fuzzy_env/
+.env
+__pycache__/
+*.pyc
+.DS_Store
+mlruns/
+*.csv
