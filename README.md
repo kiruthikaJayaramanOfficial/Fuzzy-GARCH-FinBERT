@@ -18,7 +18,7 @@
 **NIFTY-50 sentiment-volatility forecasting** using WIFCM μ/ν/π fuzzy degrees
 replacing hard thresholds · Full production MLOps pipeline
 
-### 🚀 [Live Dashboard](https://fuzzy-garch-finbert-pey3hj7mc88ahjh8run2ch.streamlit.app/) ← *Replace with your deployed URL*
+### 🚀 [Live Dashboard](https://fuzzy-garch-finbert-pey3hj7mc88ahjh8run2ch.streamlit.app/) 
 
 </div>
 
